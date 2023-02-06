@@ -15,14 +15,15 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
+export const auth = getAuth();
+export const provider = new GoogleAuthProvider();
 
 export async function login() {
-  signInWithPopup(auth, provider)
+  return signInWithPopup(auth, provider)
     .then((result) => {
       const user = result.user;
       console.log(user);
+      return user;
     })
     .catch(console.error);
 }
@@ -32,7 +33,7 @@ export async function logout() {
 }
 
 export function onUserStateChange(callback) {
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, async (user) => {
     callback(user);
   });
 }
